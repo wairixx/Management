@@ -1,7 +1,7 @@
 package com.example.Management.controller;
 
 import com.example.Management.entity.Student;
-import com.example.Management.exeptions.CustomNotValidNameExeption;
+import com.example.Management.exeptions.CustomNotValidNameException;
 import com.example.Management.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class StudentController {
     @Autowired
     private StudentService studentService;
+
 
     @GetMapping("/students")
     public String listOfStudent(Model model) {
@@ -32,17 +33,24 @@ public class StudentController {
 
     @PostMapping("/admin/students/add")
     public String saveNewStudent(@ModelAttribute("student") Student student, Model model, BindingResult result) {
-        Student existingUser = studentService.findUserByEmail(student.getEmail());
-        if (existingUser != null && existingUser.getEmail() != null && !existingUser.getEmail().isEmpty()) {
-            result.rejectValue("email", null,
-                    "There is already a student registered with the same email");
-        }
-        else if (result.hasErrors()) {
-            model.addAttribute("student", student);
-            return "redirect:/students/new?error";
-        }
-        else if(student.getFirstName().equals("loh")){
-            throw new CustomNotValidNameExeption("you can not use this name");
+//        Student existingUser = studentService.findUserByEmail(student.getEmail());
+//        if (existingUser != null && existingUser.getEmail().equals(student.getEmail())) {
+//            result.rejectValue("email", null,
+//                    "There is already a student registered with the same email");
+//        }
+//        else if (result.hasErrors()) {
+//            model.addAttribute("student", student);
+//            return "redirect:/students/new?error";
+//        }
+//        else if(student.getFirstName().equals("loh")){
+//            throw new CustomNotValidNameException("you can not use this name");
+//        }
+//        studentService.save(student);
+//        return "redirect:/students";
+        if (student.getFirstName().equals("test")) {
+            throw new CustomNotValidNameException("forbidden word");
+        } else if (studentService.isUsed(student)) {
+            return "redirect:/admin/students/new?error";
         }
         studentService.save(student);
         return "redirect:/students";
@@ -83,8 +91,4 @@ public class StudentController {
         return "redirect:/students";
     }
 
-    @GetMapping("/")
-    public String index() {
-        return "index";
-    }
 }

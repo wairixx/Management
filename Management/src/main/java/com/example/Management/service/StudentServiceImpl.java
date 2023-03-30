@@ -19,8 +19,8 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public Student save(Student student) {
-        return studentRepository.save(student);
+    public void save(Student student) {
+        studentRepository.save(student);
     }
 
     @Override
@@ -29,8 +29,8 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public Student updateStudent(Student student) {
-        return studentRepository.save(student);
+    public void updateStudent(Student student) {
+        studentRepository.save(student);
     }
 
     @Override
@@ -41,6 +41,15 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public void deleteStudent(Long id) {
         studentRepository.deleteById(id);
+    }
+
+    @Override
+    public Boolean isUsed(Student student) {
+        Student studentFromBD = studentRepository.findByEmail(student.getEmail());
+        if (studentFromBD != null && (studentFromBD.getEmail().equals(student.getEmail()))) {
+            return true;
+        }
+        return false;
     }
 }
 

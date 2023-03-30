@@ -38,8 +38,13 @@
                     You have successfully registered our app!
                 </div>
             </div>
-            <div th:if="${param.error}">
-                <div class="alert alert-info">
+            <div th:if="${param.errorEmail}">
+                <div class="alert alert-danger">
+                    Email is already used
+                </div>
+            </div>
+            <div th:if="${param.errorUsername}">
+                <div class="alert alert-danger">
                     Username is already used
                 </div>
             </div>

@@ -2,7 +2,7 @@ package com.example.Management.controller;
 
 import com.example.Management.entity.Role;
 import com.example.Management.entity.User;
-import com.example.Management.repository.UserRepo;
+import com.example.Management.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Controller;
@@ -10,14 +10,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import java.util.Collections;
-import java.util.Map;
 
 @Controller
 public class UserController {
-
     @Autowired
-    private UserRepo userRepo;
+    private UserService userService;
 
     @GetMapping("/registration")
     public String registrationPage(Model model) {
@@ -27,15 +24,14 @@ public class UserController {
 
     @PostMapping("/registration/save")
     public String registerUser(User user) {
-        User existUser = userRepo.findByUsername(user.getUsername());
-        User existUser1 = userRepo.findByEmail(user.getEmail());
 
-        if (existUser != null || existUser1 != null) {
-            return "redirect:/registration?error";
+        if (userService.emailIsUsed(user)) {
+            return "redirect:/registration?errorEmail";
+        } else if (userService.usernameIsUsed(user)) {
+            return "redirect:/registration?errorUsername";
         }
-        user.setPassword(user.getPassword());
         user.setRole(Role.USER.name());
-        userRepo.save(user);
+        userService.save(user);
         return "redirect:/loginApp";
     }
 
@@ -44,15 +40,12 @@ public class UserController {
         return "login";
     }
 
-//    @GetMapping("/loginApp/process")
-//    public String login(User user) {
-//        User testUser = userRepo.findByUsername(user.getUsername());
-//        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-//
-//        if (testUser != null && (passwordEncoder.matches(user.getPassword(), testUser.getPassword()))) {
-//            return "redirect:/students";
-//        } else {
-//            return "redirect:/loginApp?error";
-//        }
-//    }
+    @GetMapping("/loginApp/process")
+    public String login(User user) {
+        if (userService.isLogged(user)) {
+            return "redirect:/students";
+        } else {
+            return "redirect:/loginApp?error";
+        }
+    }
 }
