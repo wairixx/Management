@@ -1,7 +1,8 @@
-package com.example.Management.service;
+package com.example.Management.servicesImpl;
 
-import com.example.Management.entity.Student;
-import com.example.Management.repository.StudentRepository;
+import com.example.Management.entities.Student;
+import com.example.Management.repositories.StudentRepository;
+import com.example.Management.services.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,7 +35,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public Student findUserByEmail(String email) {
+    public Student findStudentByEmail(String email) {
         return studentRepository.findByEmail(email);
     }
 
@@ -51,5 +52,16 @@ public class StudentServiceImpl implements StudentService {
         }
         return false;
     }
+
+    @Override
+    public Boolean isNull(Student student) {
+        if (student.getFirstName().contains(" ")
+                || student.getLastName().contains(" ")
+                || student.getEmail().contains(" ")) {
+            return true;
+        }
+        return false;
+    }
+
 }
 

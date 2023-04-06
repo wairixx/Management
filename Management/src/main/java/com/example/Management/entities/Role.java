@@ -1,4 +1,4 @@
-package com.example.Management.entity;
+package com.example.Management.entities;
 
 public enum Role {
     ADMIN("ADMIN"),

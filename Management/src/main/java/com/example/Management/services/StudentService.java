@@ -1,7 +1,7 @@
-package com.example.Management.service;
+package com.example.Management.services;
 
 
-import com.example.Management.entity.Student;
+import com.example.Management.entities.Student;
 
 import java.util.List;
 
@@ -15,10 +15,11 @@ public interface StudentService {
 
     void updateStudent(Student student);
 
-    Student findUserByEmail(String email);
+    Student findStudentByEmail(String email);
 
     void deleteStudent(Long id);
 
     Boolean isUsed(Student student);
+    Boolean isNull(Student student);
 }
 

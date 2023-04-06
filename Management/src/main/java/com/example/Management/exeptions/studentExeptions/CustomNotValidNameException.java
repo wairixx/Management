@@ -1,4 +1,4 @@
-package com.example.Management.exeptions;
+package com.example.Management.exeptions.studentExeptions;
 
 public class CustomNotValidNameException extends RuntimeException {
     public CustomNotValidNameException(String message) {

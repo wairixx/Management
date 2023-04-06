@@ -1,12 +1,13 @@
-package com.example.Management.service;
+package com.example.Management.servicesImpl;
 
-import com.example.Management.entity.User;
-import com.example.Management.repository.UserRepo;
+import com.example.Management.entities.User;
+import com.example.Management.repositories.UserRepo;
+import com.example.Management.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepo userRepo;
@@ -52,6 +53,15 @@ public class UserServiceImpl implements UserService{
     public Boolean emailIsUsed(User user) {
         User userFromDB = userRepo.findByEmail(user.getEmail());
         if (userFromDB != null && (userFromDB.getEmail().equals(user.getEmail()))){
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public Boolean isNull(User user) {
+        if (user.getUsername().contains(" ")
+                || user.getEmail().contains(" ")) {
             return true;
         }
         return false;

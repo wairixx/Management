@@ -1,6 +1,6 @@
-package com.example.Management.service;
+package com.example.Management.services;
 
-import com.example.Management.entity.User;
+import com.example.Management.entities.User;
 
 public interface UserService {
     User findByUsername(String username);
@@ -12,4 +12,6 @@ public interface UserService {
     Boolean usernameIsUsed(User user);
 
     Boolean emailIsUsed(User user);
+
+    Boolean isNull(User user);
 }
