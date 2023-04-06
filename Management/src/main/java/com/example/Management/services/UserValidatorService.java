@@ -1,4 +1,7 @@
 package com.example.Management.services;
 
-public class UserValidatorService {
+import com.example.Management.entities.User;
+
+public interface UserValidatorService {
+    void executeUser(User user);
 }

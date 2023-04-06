@@ -25,16 +25,6 @@ public class StudentController {
     @Autowired
     private StudentValidatorService studentValidatorService;
 
-    private final List<StudentValidator> validators = new LinkedList<>();
-
-    public StudentController(ValidateEmailIsAlreadyUsed emailIsAlreadyUsedValidator,
-                             ValidateNotAllowedWord notAllowedWordValidator,
-                             ValidateNullStudent nullStudentValidator) {
-        validators.add(emailIsAlreadyUsedValidator);
-        validators.add(nullStudentValidator);
-        validators.add(notAllowedWordValidator);
-    }
-
     @GetMapping("/students")
     public String listOfStudent(Model model) {
         model.addAttribute("students", studentService.getAllStudents());
@@ -50,9 +40,7 @@ public class StudentController {
 
     @PostMapping("/admin/students/add")
     public String saveNewStudent(@ModelAttribute("student") Student student) {
-        for (StudentValidator validator: validators){
-            validator.execute(student);
-        }
+       studentValidatorService.executeStudent(student);
         studentService.save(student);
         return "redirect:/students";
     }

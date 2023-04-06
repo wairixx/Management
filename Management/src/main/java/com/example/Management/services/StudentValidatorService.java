@@ -1,5 +1,7 @@
 package com.example.Management.services;
 
-public interface StudentValidatorService {
+import com.example.Management.entities.Student;
 
+public interface StudentValidatorService {
+    void executeStudent(Student student);
 }
