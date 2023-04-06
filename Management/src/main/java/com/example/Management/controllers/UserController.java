@@ -3,8 +3,7 @@ package com.example.Management.controllers;
 import com.example.Management.entities.Role;
 import com.example.Management.entities.User;
 import com.example.Management.services.UserService;
-import com.example.Management.userValidator.*;
-import com.example.Management.validators.userValidators.*;
+import com.example.Management.validators.userValidator.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Controller;

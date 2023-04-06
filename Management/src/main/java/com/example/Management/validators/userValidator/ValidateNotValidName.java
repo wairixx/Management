@@ -1,4 +1,4 @@
-package com.example.Management.validators.userValidators;
+package com.example.Management.validators.userValidator;
 
 import com.example.Management.entities.User;
 import com.example.Management.exeptions.studentExeptions.CustomNotValidNameException;

@@ -50,7 +50,9 @@ public class StudentController {
 
     @PostMapping("/admin/students/add")
     public String saveNewStudent(@ModelAttribute("student") Student student) {
-        studentValidatorService.executeStudent(student);
+        for (StudentValidator validator: validators){
+            validator.execute(student);
+        }
         studentService.save(student);
         return "redirect:/students";
     }
