@@ -3,10 +3,7 @@ package com.example.Management.handlers;
 import com.example.Management.exeptions.studentExeptions.CustomEmailIsAlreadyUsedException;
 import com.example.Management.exeptions.studentExeptions.CustomNotValidNameException;
 import com.example.Management.exeptions.studentExeptions.CustomNullStudentException;
-import com.example.Management.exeptions.userExceptions.EmailIsUsedException;
-import com.example.Management.exeptions.userExceptions.NotValidNameException;
-import com.example.Management.exeptions.userExceptions.NullUserException;
-import com.example.Management.exeptions.userExceptions.UsernameIsUsedException;
+import com.example.Management.exeptions.userExceptions.*;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.ModelAndView;
@@ -56,6 +53,12 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
     public ModelAndView handleNotValidNameException(NotValidNameException notValidNameException){
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("userMessage");
+        return modelAndView;
+    }
+    @ExceptionHandler(NotActivatedUserException.class)
+    public ModelAndView handleNotActivatedUserException(NotActivatedUserException notActivatedUserException){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("redirect:/loginApp?activateError");
         return modelAndView;
     }
 }

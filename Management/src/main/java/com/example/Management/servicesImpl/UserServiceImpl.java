@@ -2,6 +2,7 @@ package com.example.Management.servicesImpl;
 
 import com.example.Management.entities.User;
 import com.example.Management.repositories.UserRepo;
+import com.example.Management.services.MailSender;
 import com.example.Management.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,6 +12,8 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepo userRepo;
+    @Autowired
+    private MailSender mailSender;
     @Override
     public User findByUsername(String username) {
         return userRepo.findByUsername(username);
@@ -65,6 +68,30 @@ public class UserServiceImpl implements UserService {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public void sendMassage(User user) {
+        mailSender.sendEmailMessage(user.getEmail(), "Account activation",
+                "visit link: http://localhost:8080/activate/" + user.getActivationCode());
+    }
+
+    @Override
+    public Boolean findByActivationCode(String code) {
+        if ( userRepo.findByActivationCode(code) != null){
+            return  true;
+        }
+        return false;
+    }
+
+
+    @Override
+    public void activateUser(String code) {
+       User user = userRepo.findByActivationCode(code);
+       user.setActivated(true);
+       user.setActivationCode(null);
+       save(user);
+
     }
 
 }

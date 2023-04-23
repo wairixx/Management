@@ -14,4 +14,10 @@ public interface UserService {
     Boolean emailIsUsed(User user);
 
     Boolean isNull(User user);
+
+    void sendMassage(User user);
+
+    Boolean findByActivationCode(String code);
+
+    void activateUser(String code);
 }

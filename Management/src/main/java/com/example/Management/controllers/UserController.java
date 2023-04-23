@@ -9,8 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.util.UUID;
 
 
 @Controller
@@ -31,8 +33,16 @@ public class UserController {
     public String registerUser(User user) {
         userValidatorService.executeUser(user);
         user.setRole(Role.USER.name());
+        user.setActivated(false);
+        user.setActivationCode(UUID.randomUUID().toString());
         userService.save(user);
-        return "redirect:/loginApp";
+        userService.sendMassage(user);
+        return "/activate";
+    }
+
+    @GetMapping("/activate")
+    public String activatePage() {
+        return "activate";
     }
 
     @GetMapping("/loginApp")
@@ -42,10 +52,20 @@ public class UserController {
 
     @GetMapping("/loginApp/process")
     public String login(User user) {
+        userValidatorService.executeLoginUser(userService.findByUsername(user.getUsername()));
         if (userService.isLogged(user)) {
             return "redirect:/students";
         } else {
             return "redirect:/loginApp?error";
         }
+    }
+
+    @GetMapping("/activate/{code}")
+    public String activate(Model model, @PathVariable String code) {
+        if (userService.findByActivationCode(code)) {
+            userService.activateUser(code);
+            return "redirect:/loginApp";
+        }
+        return "index";
     }
 }

@@ -17,4 +17,7 @@ public class ValidateEmailIsAlreadyUsed implements StudentValidator {
             throw new CustomEmailIsAlreadyUsedException("email used");
         }
     }
+    public void hello(){
+        System.out.println("hello");
+    }
 }

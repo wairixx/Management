@@ -24,4 +24,8 @@ public class User {
     private String password;
     @Column
     private String role;
+    @Column
+    private Boolean activated;
+
+    String activationCode;
 }
