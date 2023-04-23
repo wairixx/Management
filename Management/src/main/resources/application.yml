@@ -1,0 +1,38 @@
+#spring.datasource.url=jdbc:mysql://localhost:3306/first_spring_project
+#spring.datasource.username=root
+#spring.datasource.password=root
+#
+#spring.jpa.show-sql=true
+#spring.jpa.hibernate.ddl-auto=update
+#spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQL5Dialect
+#
+#spring.mail.host=smtp.gmail.com
+#spring.mail.port=857
+#spring.mail.username=javamail411@gmail.com
+#spring.mail.password=xdrzrynpmzjigvyc
+#spring.mail.properties.mail.smtp.auth=true
+#spring.mail.properties.mail.smtp.starttls.enable=true
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/first_spring_project
+    username: root
+    password: root
+
+  jpa:
+    showSql: true
+    hibernate:
+      ddlAuto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5Dialect
+  mail:
+    host: smtp.gmail.com
+    port: 857
+    username: javamail411@gmail.com
+    password: xdrzrynpmzjigvyc
+    properties:
+      mail:
+        smtp:
+          auth: true
+        starttls:
+          enable: true

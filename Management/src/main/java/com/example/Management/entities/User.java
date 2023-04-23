@@ -28,4 +28,5 @@ public class User {
     private Boolean activated;
 
     String activationCode;
+
 }
